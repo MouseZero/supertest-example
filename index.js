@@ -1,13 +1,18 @@
 const express = require('express')
+const request = require('supertest')
 const app = express()
 
 app.get('/', function (req, res) {
-  res.json({
+  res.status(200).json({
     success: true,
     msg: 'test'
   })
 })
 
-app.listen(3333, function () {
-  console.log('Server listening in on 3333')
-})
+request(app)
+  .get('/')
+  .expect('Content-Type', /json/)
+  .expect(200)
+  .end(function (err, res) {
+    if (err) throw err
+  })
