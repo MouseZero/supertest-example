@@ -1,20 +1,9 @@
 const express = require('express')
-const request = require('supertest')
-const { describe, it } = require('mocha')
+const routes = require('./src/routes')
 const app = express()
 
-app.get('/', function (req, res) {
-  res.status(200).json({
-    success: true,
-    msg: 'test'
-  })
-})
+app.use(routes())
 
-describe('GET /', function () {
-  it('respond with json', function () {
-    return request(app)
-      .get('/')
-      .set('Accept', 'application/json')
-      .expect(200)
-  })
+app.listen(3333, function () {
+  console.log('listening')
 })
