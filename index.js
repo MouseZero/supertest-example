@@ -1,5 +1,6 @@
 const express = require('express')
 const request = require('supertest')
+const { describe, it } = require('mocha')
 const app = express()
 
 app.get('/', function (req, res) {
@@ -9,10 +10,11 @@ app.get('/', function (req, res) {
   })
 })
 
-request(app)
-  .get('/')
-  .expect('Content-Type', /json/)
-  .expect(200)
-  .end(function (err, res) {
-    if (err) throw err
+describe('GET /', function () {
+  it('respond with json', function () {
+    return request(app)
+      .get('/')
+      .set('Accept', 'application/json')
+      .expect(200)
   })
+})
